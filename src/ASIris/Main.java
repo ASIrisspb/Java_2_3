@@ -67,13 +67,10 @@ public class Main {
         int count = 1;
         //циклом проходим по исходному массиву
         for (String word : arrayOfNames) {
-            //получаем множество уже имеющихся ключей, чтобы проверить повторы
-            for (String entry : hashMap.keySet()) {
-                //если очередное слово из исходного списка уже встречалось, то значит такой ключ уже есть
-                if (entry.equals(word)) {
-                    //тогда мы берем значение по этому ключу, которое хранит как раз повторы и увеличиваем на 1
-                    count = hashMap.get(entry) + 1;
-                }
+            //проверяем наличие уже имеющегося ключа (повтор)
+            if (hashMap.containsKey(word)) {
+                //если уже есть, то увеличиваем счетчик
+                count = hashMap.get(word) + 1;
             }
             //кладем каждое слово и количество упоминаний в словарь.
             //если повторов не было, то значение по ключу будет равно 1
@@ -92,45 +89,5 @@ public class Main {
         list.add("Соня"); list.add("Иван"); list.add("Оля");  list.add("Саша");
         list.add("Коля"); list.add("Миша"); list.add("Ира");  list.add("Маша");
         list.add("Саша"); list.add("Паша"); list.add("Саша"); list.add("Оля");
-
-    }
-
-    //вложенный класс
-    private static class Phonebook {
-        //основное поле класса, хранящее запись телефона и фамилии
-        public HashMap<String,String> records;
-
-        //конструктор, создающий мапу, то есть поле класса
-        public Phonebook() {
-            this.records = new HashMap<>();
-        }
-
-        //метод добавления записи
-        public void add (String phone, String surname) {
-            records.put(phone, surname);
-        }
-
-        //метод получения списка телефонов по фамилии
-        public void get (String surname) {
-            //заготовка для вывода результата поиска
-            ArrayList<String> resultOfSearch = new ArrayList<>();
-            //проходим циклом по имеющемуся списку фамилий
-            for (Map.Entry<String,String> record : records.entrySet()) {
-                //если есть совпадение с заданной фамилией, то
-                if (record.getValue().equals(surname)) {
-                    //кладем в результат поиска номер телефона
-                    resultOfSearch.add(record.getKey());
-                }
-            }
-            //результаты выводим в консоль
-            if (resultOfSearch.size() > 0) {
-                System.out.println("В телефонном справочнике запрошенной фамилии соответствуют следующие номера:");
-                for (String number : resultOfSearch) {
-                    System.out.println(number);
-                }
-            } else {
-                System.out.println("Соответствий данной фамилии не найдено.");
-            }
-        }
     }
 }
